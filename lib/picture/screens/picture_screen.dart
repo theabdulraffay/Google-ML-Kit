@@ -45,32 +45,20 @@ class PictureScreen extends StatelessWidget {
                   return Container();
                 },
               ),
-              BlocBuilder<PictureToTextBloc, PictureToTextState>(
-                  // Removed buildWhen or use a proper condition
-                  buildWhen: (curr, prev) => false,
-                  builder: (context, state) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<PictureToTextBloc>()
-                            .add(PictureFromGalleryEvent());
-                      },
-                      child: Text('Pick Image from Gallery'),
-                    );
-                  }),
-              BlocBuilder<PictureToTextBloc, PictureToTextState>(
-                  // Removed buildWhen or use a proper condition
-                  buildWhen: (curr, prev) => false,
-                  builder: (context, state) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<PictureToTextBloc>()
-                            .add(ExtractTextEvent());
-                      },
-                      child: Text('Extract textfrom Gallery'),
-                    );
-                  }),
+              ElevatedButton(
+                onPressed: () {
+                  context
+                      .read<PictureToTextBloc>()
+                      .add(PictureFromGalleryEvent());
+                },
+                child: Text('Pick Image from Gallery'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<PictureToTextBloc>().add(ExtractTextEvent());
+                },
+                child: Text('Extract textfrom Gallery'),
+              ),
             ],
           ),
         ),
