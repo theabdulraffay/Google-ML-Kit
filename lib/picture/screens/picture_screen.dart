@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ml_kit/picture/bloc/picture_to_text_bloc.dart';
+import 'package:flutter_ml_kit/picture/utils/enums.dart';
 
 class PictureScreen extends StatelessWidget {
   const PictureScreen({super.key});
@@ -19,18 +20,29 @@ class PictureScreen extends StatelessWidget {
           children: [
             BlocBuilder<PictureToTextBloc, PictureToTextState>(
               builder: (context, state) {
-                log('picture: ${state.file?.path}', name: 'PictureScreen');
-                return SizedBox(
-                  height: 200,
-                  width: 200,
-                  child: state.file == null
-                      ? Center(child: Text('No Image Selected'))
-                      : Image.file(
-                          File(
-                            state.file!.path,
-                          ),
-                        ),
-                );
+                if (state.status == Status.pictureadded) {
+                  log('picture: ${state.file!.path}', name: 'PictureScreen');
+                  return SizedBox(
+                    height: 200,
+                    width: 200,
+                    child: Image.file(
+                      File(
+                        state.file!.path,
+                      ),
+                    ),
+                  );
+                }
+                return Center(child: Text('No Image Selected'));
+              },
+            ),
+            BlocBuilder<PictureToTextBloc, PictureToTextState>(
+              // Removed buildWhen or use a proper condition
+              buildWhen: (curr, prev) => false,
+              builder: (context, state) {
+                if (state.status == Status.textextracted) {
+                  return Text(state.extractedText);
+                }
+                return Container();
               },
             ),
             BlocBuilder<PictureToTextBloc, PictureToTextState>(
@@ -45,7 +57,18 @@ class PictureScreen extends StatelessWidget {
                     },
                     child: Text('Pick Image from Gallery'),
                   );
-                })
+                }),
+            BlocBuilder<PictureToTextBloc, PictureToTextState>(
+                // Removed buildWhen or use a proper condition
+                buildWhen: (curr, prev) => false,
+                builder: (context, state) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.read<PictureToTextBloc>().add(ExtractTextEvent());
+                    },
+                    child: Text('Extract textfrom Gallery'),
+                  );
+                }),
           ],
         ),
       ),

@@ -10,3 +10,7 @@ sealed class PictureToTextEvent extends Equatable {
 class PictureFromGalleryEvent extends PictureToTextEvent {
   const PictureFromGalleryEvent();
 }
+
+class ExtractTextEvent extends PictureToTextEvent {
+  const ExtractTextEvent();
+}
