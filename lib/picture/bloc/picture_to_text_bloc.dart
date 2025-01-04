@@ -41,10 +41,11 @@ class PictureToTextBloc extends Bloc<PictureToTextEvent, PictureToTextState> {
     }
     final text = await ImageTextPickerUtil.getTextFromPath(state.file!.path);
     log('Extracted text: $text', name: 'Text from pictures');
-    emit(state.copyWith(
-      extractedText: text,
-      status: Status.textextracted,
-      file: state.file,
-    ));
+    emit(
+      state.copyWith(
+        extractedText: text,
+        status: Status.textextracted,
+      ),
+    );
   }
 }
