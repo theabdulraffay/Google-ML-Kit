@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ml_kit/Translation/Screens/translation_screen.dart';
+import 'package:flutter_ml_kit/Translation/bloc/translation_bloc.dart';
 import 'package:flutter_ml_kit/picture/bloc/picture_to_text_bloc.dart';
 import 'package:flutter_ml_kit/picture/screens/picture_screen.dart';
 
@@ -16,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => PictureToTextBloc()),
+        BlocProvider(create: (_) => TranslationBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SafeArea(child: PictureScreen()),
+        home: SafeArea(child: TranslationScreen()),
       ),
     );
   }

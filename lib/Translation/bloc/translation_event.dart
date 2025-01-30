@@ -6,3 +6,10 @@ sealed class TranslationEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GetLanguageEvent extends TranslationEvent {
+  final String languageCode;
+  const GetLanguageEvent({required this.languageCode});
+  @override
+  List<Object> get props => [languageCode];
+}
