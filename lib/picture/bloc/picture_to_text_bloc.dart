@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ml_kit/picture/utils/enums.dart';
@@ -20,7 +18,6 @@ class PictureToTextBloc extends Bloc<PictureToTextEvent, PictureToTextState> {
       PictureFromGalleryEvent event, Emitter<PictureToTextState> emit) async {
     final file = await ImagePickerUtil().pickImagefromGalley();
     if (file == null) {
-      log('Image selection cancelled.');
       return;
     }
     emit(
@@ -34,13 +31,11 @@ class PictureToTextBloc extends Bloc<PictureToTextEvent, PictureToTextState> {
   void _extractText(
       ExtractTextEvent event, Emitter<PictureToTextState> emit) async {
     if (state.file == null) {
-      log('No image selected.', name: 'Text extraction');
       emit(state.copyWith(
         status: Status.error,
       ));
     }
     final text = await ImageTextPickerUtil.getTextFromPath(state.file!.path);
-    log('Extracted text: $text', name: 'Text from pictures');
     emit(
       state.copyWith(
         extractedText: text,

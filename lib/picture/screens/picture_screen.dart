@@ -1,7 +1,4 @@
-// import 'package:bloc/bloc.dart';
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ml_kit/picture/bloc/picture_to_text_bloc.dart';
@@ -22,7 +19,6 @@ class PictureScreen extends StatelessWidget {
               BlocBuilder<PictureToTextBloc, PictureToTextState>(
                 builder: (context, state) {
                   if (state.file != null) {
-                    log('picture: ${state.file!.path}', name: 'PictureScreen');
                     return SizedBox(
                       height: 200,
                       width: 200,
